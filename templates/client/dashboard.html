@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Client Dashboard - FIXIT{% endblock %}
+
+{% block body_class %}page-client{% endblock %}
+
+{% block content %}
+<div class="container fade-in">
+    <div class="client-header">
+        <h1>Hello, {{ current_user.name }}!</h1>
+        <div style="text-align: right;">
+            <p><i class="fas fa-map-marker-alt"></i> Using your current location</p>
+            <a href="{{ url_for('auth.logout') }}" style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Logout</a>
+        </div>
+    </div>
+
+    <div class="card"
+        style="margin-top: -20px; border-radius: 0 0 16px 16px; margin-bottom: 40px; text-align: center; padding: 40px;">
+        <h2 style="font-size: 2rem; margin-bottom: 10px; color: var(--theme-client-bg);">What do you need help with?
+        </h2>
+        <p style="color: #666;">Select a service to find the nearest professionals.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px;">
+        <!-- Service Tiles -->
+        {% set services = [
+        ('Plumber', 'fa-faucet'),
+        ('Electrician', 'fa-bolt'),
+        ('Carpenter', 'fa-hammer'),
+        ('AC Technician', 'fa-wind'),
+        ('Painter', 'fa-paint-roller'),
+        ('Cleaner', 'fa-broom')
+        ] %}
+
+        {% for name, icon in services %}
+        <a href="{{ url_for('client.service_workers', service_name=name) }}" class="card"
+            style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 180px; text-decoration: none; color: var(--text-dark);">
+            <div
+                style="width: 70px; height: 70px; background-color: var(--theme-client-bg); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; color: white;">
+                <i class="fas {{ icon }}" style="font-size: 1.8rem;"></i>
+            </div>
+            <h3 style="font-size: 1.1rem; color: var(--theme-client-bg);">{{ name }}</h3>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

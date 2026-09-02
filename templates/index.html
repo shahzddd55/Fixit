@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}FIXIT - Select Your Role{% endblock %}
+
+{% block body_class %}page-entry{% endblock %}
+
+{% block content %}
+<div class="container fade-in" style="text-align: center;">
+    <h1 style="font-size: 4rem; margin-bottom: 10px; color: var(--theme-entry-accent);">FIXIT</h1>
+    <p style="font-size: 1.5rem; margin-bottom: 50px; opacity: 0.8;">Premium Home Services, On Demand.</p>
+
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;">
+        <a href="{{ url_for('auth.login', role='client') }}" class="btn-role">
+            <i class="fas fa-user" style="font-size: 3rem; margin-bottom: 15px;"></i>
+            <span>I am a Client</span>
+        </a>
+
+        <a href="{{ url_for('auth.login', role='worker') }}" class="btn-role">
+            <i class="fas fa-tools" style="font-size: 3rem; margin-bottom: 15px;"></i>
+            <span>I am a Worker</span>
+        </a>
+
+        <a href="{{ url_for('auth.login', role='admin') }}" class="btn-role">
+            <i class="fas fa-shield-alt" style="font-size: 3rem; margin-bottom: 15px;"></i>
+            <span>Admin Login</span>
+        </a>
+    </div>
+</div>
+{% endblock %}

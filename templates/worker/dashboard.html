@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Worker Dashboard - FIXIT{% endblock %}
+
+{% block body_class %}page-worker{% endblock %}
+
+{% block content %}
+<div class="container fade-in">
+    <div class="client-header">
+        <h1>Welcome, {{ current_user.name }}</h1>
+        <div style="text-align: right;">
+            {% if worker_profile.is_approved %}
+            <span style="background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">
+                <i class="fas fa-check-circle"></i> Approved
+            </span>
+            {% else %}
+            <span style="background: rgba(255,0,0,0.2); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem;">
+                <i class="fas fa-clock"></i> Pending Approval
+            </span>
+            {% endif %}
+
+            <a href="{{ url_for('auth.logout') }}"
+                style="color: rgba(255,255,255,0.8); margin-left: 15px; font-size: 0.9rem;">Logout</a>
+        </div>
+    </div>
+
+    {% if not worker_profile.is_approved %}
+    <div class="card" style="text-align: center; border-left: 5px solid #ffcc00;">
+        <h3>Account Under Review</h3>
+        <p>You cannot accept jobs until an admin approves your profile.</p>
+    </div>
+    {% else %}
+
+    <!-- Stats Row -->
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 30px;">
+        <div class="card" style="text-align: center; padding: 20px;">
+            <h2 style="font-size: 2rem; color: var(--theme-worker-bg);">₹0</h2>
+            <p style="color: #666;">Today's Earnings</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 20px;">
+            <h2 style="font-size: 2rem; color: var(--theme-worker-bg);">{{ active_jobs|length }}</h2>
+            <p style="color: #666;">Active Jobs</p>
+        </div>
+        <div class="card" style="text-align: center; padding: 20px;">
+            <h2 style="font-size: 2rem; color: var(--theme-worker-bg);">{{ worker_profile.rating }}</h2>
+            <p style="color: #666;">Rating</p>
+        </div>
+    </div>
+
+    <!-- Incoming Requests -->
+    <h2 style="color: white; margin-bottom: 20px;">Incoming Requests</h2>
+    {% if requests %}
+    {% for req in requests %}
+    <div class="card" style="border-left: 5px solid var(--theme-client-accent);">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <h3>{{ req.service_type }} Request from Client #{{ req.client_id }}</h3>
+                <p>{{ req.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+            </div>
+            <div>
+                <a href="{{ url_for('worker.accept_job', booking_id=req.id) }}" class="btn"
+                    style="background-color: var(--theme-worker-bg); color: white;">Accept</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p style="color: rgba(255,255,255,0.7);">No new requests.</p>
+    {% endif %}
+
+    <!-- Active Jobs -->
+    <h2 style="color: white; margin: 30px 0 20px;">Active Jobs</h2>
+    {% if active_jobs %}
+    {% for job in active_jobs %}
+    <div class="card" style="border-left: 5px solid var(--theme-booking-accent);">
+        <h3>Booking #{{ job.id }} - {{ job.service_type }}</h3>
+        <p><strong>Status:</strong> {{ job.status|capitalize }}</p>
+
+        <div style="margin-top: 15px; padding: 15px; background: #f9f9f9; border-radius: 8px;">
+            <p><strong>Mock Client Phone:</strong> +91 98765 00000</p>
+            <!-- Mocked as per request logic "Worker receives booking without seeing client phone number" -> "After booking: Show masked contact". -->
+            <p><strong>Address:</strong> Mock Location (1.2km away)</p>
+
+            <form action="{{ url_for('worker.verify_job', booking_id=job.id) }}" method="POST"
+                style="margin-top: 15px; display: flex; gap: 10px;">
+                <input type="text" name="otp" placeholder="Enter Client OTP" required style="width: 150px;">
+                <button type="submit" class="btn"
+                    style="background-color: var(--theme-booking-accent); color: var(--text-dark);">Start
+                    Service</button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    <p style="color: rgba(255,255,255,0.7);">No active jobs.</p>
+    {% endif %}
+
+    {% endif %}
+</div>
+{% endblock %}

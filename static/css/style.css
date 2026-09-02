@@ -1,0 +1,167 @@
+:root {
+    /* Color Palettes */
+    --theme-entry-bg: #0B1C2D;
+    --theme-entry-accent: #00E5FF;
+    
+    --theme-client-bg: #1F3C88;
+    --theme-client-accent: #F9C74F;
+    
+    --theme-worker-bg: #1B5E20;
+    --theme-worker-accent: #F4F6F8; /* Using soft grey as secondary/accent for worker as per request */
+    
+    --theme-admin-bg: #121212;
+    --theme-admin-accent: #E63946;
+    
+    --theme-booking-bg: #4A148C;
+    --theme-booking-accent: #00E676;
+
+    --text-light: #ffffff;
+    --text-dark: #333333;
+    --card-bg-white: #ffffff;
+    
+    /* Spacing & UI */
+    --radius-card: 16px;
+    --radius-btn: 8px;
+    --shadow-soft: 0 4px 20px rgba(0,0,0,0.1);
+    --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-main);
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+    /* Default background, overridden by pages */
+    background-color: #f0f0f0; 
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+/* Utility Classes */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card {
+    background: var(--card-bg-white);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    padding: 24px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: var(--radius-btn);
+    text-decoration: none;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+/* Page Specific Themes */
+/* Entry Page */
+body.page-entry {
+    background-color: var(--theme-entry-bg);
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+body.page-entry .btn-role {
+    background-color: rgba(255,255,255,0.1);
+    color: var(--text-light);
+    border: 2px solid var(--theme-entry-accent);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 200px;
+    padding: 30px;
+    margin: 10px;
+}
+
+body.page-entry .btn-role:hover {
+    background-color: var(--theme-entry-accent);
+    color: var(--theme-entry-bg);
+    transform: scale(1.05);
+}
+
+/* Client Pages */
+body.page-client {
+    background-color: var(--theme-client-bg);
+}
+
+.client-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    color: white;
+}
+
+/* Worker Pages */
+body.page-worker {
+    background-color: var(--theme-worker-bg);
+}
+
+/* Admin Pages */
+body.page-admin {
+    background-color: var(--theme-admin-bg);
+    color: #eee;
+}
+
+/* Booking Pages */
+body.page-booking {
+    background-color: var(--theme-booking-bg);
+    color: white;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: var(--radius-btn);
+    font-size: 16px;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--theme-client-accent);
+}

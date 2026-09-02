@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Booking Confirmed - FIXIT{% endblock %}
+
+{% block body_class %}page-booking{% endblock %}
+
+{% block content %}
+<div class="container fade-in" style="text-align: center; max-width: 600px; margin-top: 50px;">
+
+    <div class="card" style="background-color: var(--theme-booking-bg); border: 2px solid var(--theme-booking-accent);">
+        <i class="fas fa-check-circle"
+            style="font-size: 4rem; color: var(--theme-booking-accent); margin-bottom: 20px;"></i>
+        <h1 style="color: white; margin-bottom: 10px;">Booking Sent!</h1>
+        <p style="color: rgba(255,255,255,0.8); margin-bottom: 30px;">The worker has been notified.</p>
+
+        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; margin-bottom: 30px;">
+            <p style="text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; margin-bottom: 10px;">
+                Verification Code</p>
+            <h2 style="font-size: 3.5rem; letter-spacing: 5px; color: var(--theme-booking-accent); font-weight: 700;">{{
+                booking.verification_code }}</h2>
+            <p style="font-size: 0.8rem; margin-top: 10px; color: #aaa;">Show this code to the worker when they arrive.
+            </p>
+        </div>
+
+        <div
+            style="text-align: left; background: white; color: #333; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+            <p><strong>Service:</strong> {{ booking.service_type }}</p>
+            <p><strong>Worker:</strong> Hidden (Will reveal after acceptance)</p>
+            <!-- Or reveal now? Request said "Worker name hidden UNTIL verification" or "before booking"? Request: "DO NOT show worker name or personal identity before booking". So now that it IS booked, maybe we can show it? "Worker receives booking without seeing client phone number...". "Worker names remain hidden until verification". Okay, keep hidden. -->
+            <p><strong>Worker Status:</strong> {{ booking.status|capitalize }}</p>
+        </div>
+
+        <a href="{{ url_for('client.dashboard') }}" class="btn"
+            style="background-color: var(--theme-booking-accent); color: var(--theme-booking-bg); width: 100%;">Back to
+            Dashboard</a>
+    </div>
+
+</div>
+{% endblock %}
